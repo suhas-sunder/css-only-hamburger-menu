@@ -16,6 +16,9 @@ body {
   --foreground: #333;
   --background: white;
   --anim-timing: 200ms ease-in-out;
+  --total-height: calc(var(--bar-height) * 3 + var(--gap) * 2);
+  /* Using trig, multiply by sqrt(2) To obtain the correct angle for the bar_ */
+  --x-width: calc(var(--total-height) * 1.41421356237);
 }
 
 .burger-menu {
@@ -48,15 +51,54 @@ body {
   height: var(--bar-height);
   background-color: var(--foreground);
   border-radius: 9999px;
-  transition: opacity var(--anim-timing);
+  transition: opacity var(--anim-timing), width var(--animation-timing),
+    rotate var(--anim-timing), translate var(--anim-timing),
+    background-color var(--anim-timing);
+  transform-origin: left center;
 }
 
 /* When input is checked */
 .burger-menu input:checked {
   opacity: 0;
   width: 0;
+  background-color: var(--foreground);
 }
 
-.hamburger-menu:has(input:checked)::before {
-    rotate: 45deg;
+.burger-menu:has(input:checked)::before {
+  rotate: 45deg;
+  width: var(--x-width);
+  translate: 0 calc(var(--bar-height) / -2);
+}
+
+.burger-menu:has(input:checked)::after {
+  rotate: -45deg;
+  width: var(--x-width);
+  translate: 0 calc(var(--bar-height) / 2);
+}
+
+.burger-menu:has(input:checked) {
+  --background: var(--foreground);
+  --foreground: white;
+}
+
+.burger-menu:has(input:focus-visible)::before,
+.burger-menu:has(input:focus-visible)::after,
+.burger-menu:has(input:focus-visible) {
+  border: 1px solid var(--background);
+  box-shadow: 0 0 0 1px var(--foreground);
+}
+
+.sidebar {
+  display: flex;
+  justify-content: center;
+  padding-top: calc(var(--total-height) + var(--margin) + 1rem);
+  background-color: var(--foreground);
+  color: var(--background);
+  max-width: 10rem;
+  height: 100vh;
+  translate: -100%;
+}
+
+.burger-menu:has(input:checked) + .sidebar {
+  translate: 0;
 }
