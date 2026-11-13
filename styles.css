@@ -51,7 +51,7 @@ body {
   height: var(--bar-height);
   background-color: var(--foreground);
   border-radius: 9999px;
-  transition: opacity var(--anim-timing), width var(--animation-timing),
+  transition: opacity var(--anim-timing), width var(--anim-timing),
     rotate var(--anim-timing), translate var(--anim-timing),
     background-color var(--anim-timing);
   transform-origin: left center;
